@@ -1,0 +1,110 @@
+<h2>New Student</h2>
+
+<mat-card>
+  <div class="row">
+    <form [formGroup]="studentForm" (ngSubmit)="submit()">
+      <div class="col-md-6">
+        <h4>Personal Information</h4>
+        <mat-form-field>
+          <input matInput placeholder="First Name" formControlName="firstName" [errorStateMatcher]="matcher" required>
+          <mat-error *ngIf="firstName.hasError('required')">Last Name is <strong>required</strong></mat-error>
+          <mat-error *ngIf="firstName.hasError('maxlength')">Last Name should be maximum <strong>{{ firstName.errors.maxlength.requiredLength }}</strong></mat-error>
+          <mat-error *ngIf="firstName.hasError('minlength')">Last Name should be minimum <strong>{{ firstName.errors.minlength.requiredLength }}</strong></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" formControlName="lastName" [errorStateMatcher]="matcher" required>
+          <mat-error *ngIf="lastName.hasError('required')">Last Name is <strong>required</strong></mat-error>
+          <mat-error *ngIf="lastName.hasError('maxlength')">Last Name should be maximum <strong>{{ lastName.errors.maxlength.requiredLength }}</strong></mat-error>
+          <mat-error *ngIf="lastName.hasError('minlength')">Last Name should be minimum <strong>{{ lastName.errors.minlength.requiredLength }}</strong></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" [errorStateMatcher]="matcher" required>
+          <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">Please enter a valid email address</mat-error>
+          <mat-error *ngIf="email.hasError('required')">Email is <strong>required</strong></mat-error>
+          <mat-error *ngIf="email.hasError('maxlength')">Email should be maximum <strong>{{ email.errors.maxlength.requiredLength }}</strong></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Phone" formControlName="phone" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="phone.hasError('maxlength')">Phone should be maximum <strong>{{ phone.errors.maxlength.requiredLength }}</strong></mat-error>
+        </mat-form-field>
+        <br><p></p>
+        <mat-radio-group formControlName="sex" class="padding-top-10">
+          <mat-radio-button value="Male">Male</mat-radio-button>
+          <mat-radio-button value="Female">Female</mat-radio-button>
+          <mat-error *ngIf="sex.touched && sex.hasError('required')">Sex is <strong>required</strong></mat-error>
+          <mat-error *ngIf="sex.touched && sex.hasError('validSex')">Sex is not <strong>valid</strong></mat-error>
+        </mat-radio-group>
+        <mat-form-field>
+          <input matInput placeholder="Id Number" formControlName="idNumber" [errorStateMatcher]="matcher" required>
+          <mat-error *ngIf="idNumber.hasError('required')">Id Number is <strong>required</strong></mat-error>
+          <mat-error *ngIf="idNumber.hasError('maxlength')">Phone should be maximum <strong>{{ idNumber.errors.maxlength.requiredLength }}</strong></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="dobPicker" placeholder="Date of birth" formControlName="dateOfBirth" required>
+          <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dobPicker disabled="false"></mat-datepicker>
+          <mat-error *ngIf="dateOfBirth.hasError('required')">Id Number is <strong>required</strong></mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <h4>School Details</h4>
+        <mat-form-field>
+          <input matInput [matDatepicker]="dateEnrolledPicker" placeholder="Date Enrolled" formControlName="dateEnrolled" required>
+          <mat-datepicker-toggle matSuffix [for]="dateEnrolledPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dateEnrolledPicker disabled="false"></mat-datepicker>
+          <mat-error *ngIf="dateEnrolled.hasError('required')">Id Number is <strong>required</strong></mat-error>
+        </mat-form-field>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-select placeholder="Select Class" [formControl]="classId" (change)="onClassChange()" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let class of classes" [value]="class.id">{{class.name}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="classId.hasError('required')">Please choose an class</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-select placeholder="Select Class Section" [formControl]="classSectionId" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let section of classSections" [value]="section.id">{{section.name}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="classSectionId.hasError('required')">Please choose an class section</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <br>
+        <h4>Address Information</h4>
+        <div formGroupName="address">
+          <mat-form-field>
+            <input matInput placeholder="Address" formControlName="street" [errorStateMatcher]="matcher" required>
+            <mat-error *ngIf="street.hasError('required')">Address is <strong>required</strong></mat-error>
+            <mat-error *ngIf="street.hasError('maxlength')">Address should be maximum <strong>{{ street.errors.maxlength.requiredLength }}</strong>characters</mat-error>
+            <mat-error *ngIf="street.hasError('minlength')">Address should be minimum <strong>{{ street.errors.minlength.requiredLength }}</strong>characters</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="City" formControlName="city" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="city.hasError('maxlength')">City should be maximum <strong>{{ city.errors.maxlength.requiredLength }}</strong>characters</mat-error>
+            <mat-error *ngIf="city.hasError('minlength')">City should be minimum <strong>{{ city.errors.minlength.requiredLength }}</strong>characters</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Country" formControlName="country" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="country.hasError('maxlength')">Country should be maximum <strong>{{ country.errors.maxlength.requiredLength }}</strong>characters</mat-error>
+            <mat-error *ngIf="country.hasError('minlength')">Country should be minimum <strong>{{ country.errors.minlength.requiredLength }}</strong>characters</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Zip Code" formControlName="zip" [errorStateMatcher]="matcher">
+            <mat-error *ngIf="zip.hasError('maxlength')">Zip Code should be maximum <strong>{{ zip.errors.maxlength.requiredLength }}</strong>characters</mat-error>
+            <mat-error *ngIf="zip.hasError('minlength')">Zip Code should be minimum <strong>{{ zip.errors.minlength.requiredLength }}</strong>characters</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <p>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </p>
+      </div>
+    </form>
+  </div>
+</mat-card>

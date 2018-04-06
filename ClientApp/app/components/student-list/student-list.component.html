@@ -1,0 +1,44 @@
+<h2>Students Management</h2>
+
+<div class="students-container mat-elevation-z8">
+  <div class="student-header">
+    <button mat-raised-button color="primary" class="mat-elevation-z0" [routerLink]="['/students/new']">New Student</button>
+    <mat-input-container>
+      <input matInput placeholder="Search Students" #input>
+    </mat-input-container>
+  </div>
+  <mat-table #table [dataSource]="dataSource" matSort matSortDisableClear>
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+      <mat-cell *matCellDef="let student"> {{student.firstName}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+      <mat-cell *matCellDef="let student"> {{student.lastName}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+      <mat-cell *matCellDef="let student"> {{student.email}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Phone </mat-header-cell>
+      <mat-cell *matCellDef="let student"> {{student.phone}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let student">
+        <a mat-button color="primary" [routerLink]="['/students/view/', student.id]">View</a>
+        <a mat-button color="primary" [routerLink]="['/students/', student.id]">Edit</a>
+      </mat-cell>
+    </ng-container> 
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></mat-row>
+  </mat-table>
+
+  <mat-paginator [length]="dataSource.studentsCount$ | async" [pageSize]="5" [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
+
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async" style="display: flex; justify-content: center; align-items: center;">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

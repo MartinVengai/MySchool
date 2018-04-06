@@ -1,0 +1,13 @@
+.tab-content {
+  padding: 16px;
+}
+.example-card {
+  max-width: 100px;
+}
+
+.example-header-image {
+  background-size: cover;
+}
+.photos-card {
+  max-width: 250px;
+}

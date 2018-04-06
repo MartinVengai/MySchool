@@ -1,0 +1,46 @@
+<h2>Student Details</h2>
+
+<mat-card>
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="Profile">
+        <div class="tab-content" *ngIf="student">
+          <h4>Contact Details</h4>
+          <mat-list role="list">
+            <mat-list-item role="listitem">First Name: {{ student.firstName }}</mat-list-item>
+            <mat-list-item role="listitem">Last Name: {{ student.lastName }}</mat-list-item>
+            <mat-list-item role="listitem">Email: {{ student.email }}</mat-list-item>
+          </mat-list>
+        </div>
+      </mat-tab>
+      <mat-tab label="Documents">
+        <div class="tab-content">
+          <h4>Documents</h4>
+          <div class="row">
+            <div class="col-md-12">
+              <button mat-raised-button color="primary" (click)="fileInput.click()">
+                <mat-icon>library_add</mat-icon>
+                <span>Upload Photo</span>
+                <input #fileInput type="file" (change)="uploadPhoto($event)" style="display:none;" />
+              </button>
+              <div class="progress" *ngIf="progress && progress.percentage">
+                <div class="progress-bar" [style.width]="progress.percentage + '%'" >
+                  <span >{{ progress.percentage }}% Complete  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3" *ngFor="let photo of photos">
+              <mat-card class="photos-card">
+                <img src="/uploads/students/{{ photo.fileName }}">
+              </mat-card>
+              <p></p>
+            </div>
+          </div>
+
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>
