@@ -23,11 +23,9 @@
                 <span>Upload Photo</span>
                 <input #fileInput type="file" (change)="uploadPhoto($event)" style="display:none;" />
               </button>
-              <div class="progress" *ngIf="progress && progress.percentage">
-                <div class="progress-bar" [style.width]="progress.percentage + '%'" >
-                  <span >{{ progress.percentage }}% Complete  </span>
-                </div>
-              </div>
+              <section class="progress-section" *ngIf="progress && progress.percentage">
+                <mat-progress-bar mode="determinate" [value]="progress.percentage"></mat-progress-bar>
+              </section>
             </div>
           </div>
           <div class="row">
